@@ -1,0 +1,211 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mnsec-custom-topo
+data:
+  customTopo.yaml: |-
+    name: AmLight topology
+    hosts:
+      h1:
+        mac: 00:00:00:00:00:01
+        group: Miami
+        posX: 627.86
+        posY: 235.94
+      h2:
+        mac: 00:00:00:00:00:02
+        group: Miami
+        posX: 279.36
+        posY: 146.83
+      h3:
+        mac: 00:00:00:00:00:03
+        group: SaoPaulo
+        posX: 743.86
+        posY: 340.67
+      h4:
+        mac: 00:00:00:00:00:04
+        group: SanJuan
+        posX: 119.42
+        posY: 257.43
+      h5:
+        mac: 00:00:00:00:00:05
+        group: Santiago
+        posX: 276.84
+        posY: 470.96
+      h6:
+        mac: 00:00:00:00:00:06
+        group: Santiago
+        posX: 553.94
+        posY: 427.77
+      h7:
+        mac: 00:00:00:00:00:07
+        group: Miami
+        posX: 492.2
+        posY: 323.42
+      h8:
+        mac: 00:00:00:00:00:08
+        group: Miami
+        posX: 601.16
+        posY: 168.59
+      h9:
+        mac: 00:00:00:00:00:09
+        group: Miami
+        posX: 298.91
+        posY: 91.35
+      h10:
+        mac: 00:00:00:00:00:0A
+        group: BocaRaton
+        posX: 732.09
+        posY: 92.34
+      h11:
+        mac: 00:00:00:00:00:0B
+        group: JacksonVille
+        posX: 589.17
+        posY: -5.08
+      h12:
+        mac: 00:00:00:00:00:0C
+        group: JacksonVille
+        posX: 307.65
+        posY: -20.63
+      h13:
+        mac: 00:00:00:00:00:0D
+        group: Miami
+        posX: 554.34
+        posY: 324.67
+      h14:
+        mac: 00:00:00:00:00:0E
+        group: Miami
+        posX: 231.32
+        posY: 174.39
+      h15:
+        mac: 00:00:00:00:00:0F
+        group: Santiago
+        posX: 246.83
+        posY: 422.46
+    switches:
+      AL2:
+        dpid: '0000000000000015'
+        group: Santiago
+        posX: 344.52
+        posY: 425.74
+      AL3:
+        dpid: '0000000000000016'
+        group: Santiago
+        posX: 467.47
+        posY: 421.9
+      Ampath1:
+        dpid: '0000000000000011'
+        group: Miami
+        posX: 545.32
+        posY: 241.23
+      Ampath2:
+        dpid: '0000000000000012'
+        group: Miami
+        posX: 306.35
+        posY: 247.55
+      Ampath3:
+        dpid: '0000000000000017'
+        group: Miami
+        posX: 418.47
+        posY: 327.1
+      Ampath4:
+        dpid: '0000000000000018'
+        group: Miami
+        posX: 537.73
+        posY: 109.86
+      Ampath5:
+        dpid: '0000000000000019'
+        group: Miami
+        posX: 376.72
+        posY: 106.52
+      Ampath7:
+        dpid: '0000000000000020'
+        group: BocaRaton
+        posX: 730.81
+        posY: 158.89
+      JAX1:
+        dpid: '0000000000000021'
+        group: JacksonVille
+        posX: 509.89
+        posY: -9.95
+      JAX2:
+        dpid: '0000000000000022'
+        group: JacksonVille
+        posX: 390.43
+        posY: -6.35
+      SanJuan:
+        dpid: '0000000000000014'
+        group: SanJuan
+        posX: 136.01
+        posY: 328.78
+      SoL2:
+        dpid: '0000000000000013'
+        group: SaoPaulo
+        posX: 715.82
+        posY: 261.66
+    links:
+    - node1: AL2
+      node2: SanJuan
+    - node1: AL3
+      node2: AL2
+    - node1: Ampath1
+      node2: Ampath2
+    - node1: Ampath1
+      node2: Ampath3
+    - node1: Ampath1
+      node2: Ampath4
+    - node1: Ampath1
+      node2: SoL2
+    - node1: Ampath1
+      node2: SoL2
+    - node1: Ampath2
+      node2: AL2
+    - node1: Ampath2
+      node2: Ampath3
+    - node1: Ampath2
+      node2: Ampath5
+    - node1: Ampath2
+      node2: SanJuan
+    - node1: Ampath4
+      node2: Ampath5
+    - node1: Ampath4
+      node2: Ampath7
+    - node1: Ampath4
+      node2: JAX1
+    - node1: Ampath5
+      node2: JAX2
+    - node1: Ampath7
+      node2: SoL2
+    - node1: JAX1
+      node2: JAX2
+    - node1: SoL2
+      node2: AL3
+    - node1: h1
+      node2: Ampath1
+    - node1: h2
+      node2: Ampath2
+    - node1: h3
+      node2: SoL2
+    - node1: h4
+      node2: SanJuan
+    - node1: h5
+      node2: AL2
+    - node1: h6
+      node2: AL3
+    - node1: h7
+      node2: Ampath3
+    - node1: h8
+      node2: Ampath4
+    - node1: h9
+      node2: Ampath5
+    - node1: h10
+      node2: Ampath7
+    - node1: h11
+      node2: JAX1
+    - node1: h12
+      node2: JAX2
+    - node1: h13
+      node2: Ampath1
+    - node1: h14
+      node2: Ampath2
+    - node1: h15
+      node2: AL2

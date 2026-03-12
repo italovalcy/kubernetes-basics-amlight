@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: kytos-api
+  name: kytos-api-italo.k8s-prod.amlight.net
+  annotations:
+    kubernetes.io/tls-acme: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: kytos-api-italo.k8s-prod.amlight.net
+    http:
+      paths:
+      - backend:
+          service:
+            name: kytos-api-service
+            port:
+              number: 8181
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - kytos-api-italo.k8s-prod.amlight.net
+    secretName: kytos-api-tls

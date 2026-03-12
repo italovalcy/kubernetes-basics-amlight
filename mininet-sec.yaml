@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mininet-sec
+  labels:
+    app: mininet-sec
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mininet-sec
+  template:
+    metadata:
+      name: mininet-sec
+      labels:
+        app: mininet-sec
+    spec:
+      containers:
+      - name: mininet-sec
+        image: hackinsdn/mininet-sec:testing
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8050
+        args: ["mnsec", "--topofile", "/customTopo.yaml", "--controller", "remote,ip=kytos-openflow-service"]
+        securityContext:
+          appArmorProfile:
+            type: Unconfined
+          capabilities:
+            add: ["NET_ADMIN", "SYS_MODULE", "SYS_ADMIN"]
+        volumeMounts:
+        - name: lib-modules
+          mountPath: /lib/modules
+        - name: mnsec-custom-topo-volume
+          readOnly: true
+          mountPath: "/customTopo.yaml"
+          subPath: "customTopo.yaml"
+      volumes:
+      - name: lib-modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: mnsec-custom-topo-volume
+        configMap:
+          name: mnsec-custom-topo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mininet-sec
+  labels:
+    app: mininet-sec
+spec:
+  type: NodePort
+  ports:
+  - port: 8050
+    targetPort: 8050
+    name: http-mininet-sec
+  selector:
+    app: mininet-sec

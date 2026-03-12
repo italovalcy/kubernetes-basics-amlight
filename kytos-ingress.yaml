@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kytos-api-service
+spec:
+  type: ClusterIP
+  selector:
+    app: kytos
+  ports:
+    - protocol: TCP
+      port: 8181
+      targetPort: 8181
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: kytos-api
+  name: kytos-api-MYNAME.k8s-prod.amlight.net
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: kytos-api-MYNAME.k8s-prod.amlight.net
+    http:
+      paths:
+      - backend:
+          service:
+            name: kytos-api-service
+            port:
+              number: 8181
+        path: /
+        pathType: Prefix
