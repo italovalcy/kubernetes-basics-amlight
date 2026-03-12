@@ -87,7 +87,7 @@ dig kytos-api-MYNAME.k8s-prod.amlight.net @ns.ampath.net +short
 Next step, to compliace with the best practices is to enable SSL on our Ingress. Using the Cert-Manager Kubernetes controller, along with Let's Encrypt project, we can accomplish that very easily (again please change your name):
 
 ```
-sed -i.bak -e "s/MYNAME/italovalcy/g" kytos-ingress.yaml
+sed -i.bak -e "s/MYNAME/italovalcy/g" kytos-ingress-ssl.yaml
 kubectl apply -f kytos-ingress-ssl.yaml
 ```
 
