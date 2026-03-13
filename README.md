@@ -2,6 +2,54 @@
 
 This repo contains the source code for the Kubernetes hands-on tutorial at AmLight All Hands Meeting workshop in Mar, 2026, at FIU.
 
+## Context and Prerequisites
+
+The documentation here was used during a workshop at FIU/AmLight (https://amlight.net and https://ciara.fiu.edu), and we had a Kubernetes cluster that was prepared and used during this tutorial.
+
+However, you can still run this hands-on guideline on your own machine/laptop! Please check the next paragraphs to see what you can do. If you already have access to the Kubernetes environment, you can skip the next section.
+
+### Minikube
+
+One very nice tool to help studying and testing Kubernetes is Minikube. Quoting from Minikube website:
+
+> minikube implements a local Kubernetes cluster on macOS, Linux, and Windows. minikube's primary goals are to be the best tool for local Kubernetes application development and to support all Kubernetes features that fit.
+
+To install Minikube on macOS, the recommended method is using Homebrew, the macOS package manager. This requires a container or virtual machine manager such as Docker. 
+
+Prerequisites:
+- A container or virtual machine manager (Docker, Hyperkit, QEMU, etc.). Docker Desktop is a common choice.
+- At least 2 CPUs, 2GB of free memory, and 20GB of free disk space. 
+
+Installation Steps:
+
+1. Install Homebrew (if not already installed)
+
+2. Install Minikube and Kubectl
+
+```
+brew install minikube kubectl
+```
+
+For Apple Silicon (M1/M2/M3) users: Minikube will use the docker driver with Docker Desktop installed for Apple Silicon architecture. The command is the same.
+
+You can specify the resource limits:
+
+```
+minikube start --memory=4GB --cpus=4
+```
+
+3. Verify the Installation
+
+```
+minikube status
+```
+
+Expected output should show all components as 'Running' or 'Configured'
+
+```
+kubectl cluster-info
+```
+
 ## Kubernetes commands
 
 Create the Secret and also MongoDB deployment + service:
