@@ -2,13 +2,13 @@
 
 This repo contains the source code for the Kubernetes hands-on tutorial at AmLight All Hands Meeting workshop in Mar, 2026, at FIU.
 
-## Context and Prerequisites
+## 1 - Context and Prerequisites
 
 The documentation here was used during a workshop at FIU/AmLight (https://amlight.net and https://ciara.fiu.edu), and we had a Kubernetes cluster that was prepared and used during this tutorial.
 
 However, you can still run this hands-on guideline on your own machine/laptop! Please check the next paragraphs to see what you can do. If you already have access to the Kubernetes environment, you can skip the next section.
 
-### Minikube
+### 1.1 - Minikube
 
 One very nice tool to help studying and testing Kubernetes is Minikube. Quoting from Minikube website:
 
@@ -50,7 +50,11 @@ Expected output should show all components as 'Running' or 'Configured'
 kubectl cluster-info
 ```
 
-## Kubernetes commands
+> [!NOTE]
+> When using Minikube, some steps of the tutorial below will require additional plugins for Kubernetes/Minikube, namely ExternalDNS, Cert-Manager and the Let's Encrypt config for certificates creation. Here are some guidelines: install External-DNS on Minikube (https://kubernetes-sigs.github.io/external-dns/v0.13.3/tutorials/coredns/), Install nginx-ingress + cert-manager + let's encrypt (https://gist.github.com/snormore/c7c2935d746531ed0d75064a6ad6058e#install-nginx-ingress-and-cert-manager-using-helm).
+
+
+## 2 - Kubernetes commands
 
 Create the Secret and also MongoDB deployment + service:
 ```
@@ -194,7 +198,7 @@ kubectl delete -f mongo-config.yaml
 kubectl delete -f mongo-secret.yaml
 ```
 
-## Links
+## 3 - Links
 
 This material was based on https://gitlab.com/nanuchi/k8s-in-1-hour/
 
