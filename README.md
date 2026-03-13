@@ -14,31 +14,35 @@ One very nice tool to help studying and testing Kubernetes is Minikube. Quoting 
 
 > minikube implements a local Kubernetes cluster on macOS, Linux, and Windows. minikube's primary goals are to be the best tool for local Kubernetes application development and to support all Kubernetes features that fit.
 
-To install Minikube on macOS, the recommended method is using Homebrew, the macOS package manager. This requires a container or virtual machine manager such as Docker. 
+To install Minikube on your machine, please follow the steps here: https://minikube.sigs.k8s.io/docs/start/
 
 Prerequisites:
 - A container or virtual machine manager (Docker, Hyperkit, QEMU, etc.). Docker Desktop is a common choice.
 - At least 2 CPUs, 2GB of free memory, and 20GB of free disk space. 
 
-Installation Steps:
 
-1. Install Homebrew (if not already installed)
+On macOS with M1/M2 apple silicon, for instance, you can just run:
 
-2. Install Minikube and Kubectl
-
-```
-brew install minikube kubectl
-```
-
-For Apple Silicon (M1/M2/M3) users: Minikube will use the docker driver with Docker Desktop installed for Apple Silicon architecture. The command is the same.
-
-You can specify the resource limits:
+1. Install Minikube:
 
 ```
-minikube start --memory=4GB --cpus=4
+curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-darwin-amd64
+sudo install minikube-darwin-amd64 /usr/local/bin/minikube
 ```
 
-3. Verify the Installation
+2. Install kubectl and helm (a plugin manager for kubernetes)
+
+```
+brew install kubectl helm
+```
+
+3. Start minikube:
+
+```
+minikube start --driver=docker
+```
+
+4. Verify the Installation and export the Kubeconfig
 
 ```
 minikube status
@@ -47,7 +51,14 @@ minikube status
 Expected output should show all components as 'Running' or 'Configured'
 
 ```
-kubectl cluster-info
+minikube kubectl config view > ~/minikube-kubeconfig
+kubectl --kubeconfig ~/minikube-kubeconfig get nodes
+```
+
+5. Install some extra plugins/addons that are necessary for this tutorial:
+
+```
+minikube addons enable ingress
 ```
 
 > [!NOTE]
@@ -55,6 +66,11 @@ kubectl cluster-info
 
 
 ## 2 - Kubernetes commands
+
+First of all, assuming your Kube Config file is available at ~/your-kube-config, run the following command to create an environment variable to define the location, so you dont have to modify the kubectl commands below:
+```
+export KUBECONFIG=$HOME/your-kube-config
+```
 
 Create the Secret and also MongoDB deployment + service:
 ```
@@ -80,7 +96,7 @@ $ kubectl exec -it deploy/mongo-deployment -- bash
 # mongosh "mongodb://$MONGO_INITDB_ROOT_USERNAME:$MONGO_INITDB_ROOT_PASSWORD@localhost:27017/?authSource=admin"
 
 test> show dbs
-admin> use local
+test> use local
 local> show collections
 local> db.startup_log.find()
 ```
@@ -114,10 +130,10 @@ Now let's get the NodePort that was allocated to our Kytos API Service, along wi
 
 ```
 kubectl get service/kytos-api-service -o json | grep nodePort
-kubectl get node/mia-mi1-k8s03 -o wide
+kubectl get node -o wide
 ```
 
-On the Node output, look for the column INTERNAL-IP and use that information combined with the Node Port to access Kytos Web UI on your browser at `http://IP:NODEPORT`
+On the Node output, look for the column INTERNAL-IP for the node where your Pod is running (probably `mia-mi1-k8s03`, unless you are using Minikube) and use that information combined with the Node Port to access Kytos Web UI on your browser at `http://IP:NODEPORT`
 
 Now we will create an Ingress, so that we can access Kytos server using a friendly DNS name. Now that we will have an Ingress, we no longer need the external service (NodePort), so let's also change that. First change the DNS name to your preferred name and then create the resource:
 
